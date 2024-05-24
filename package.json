@@ -1,0 +1,19 @@
+{
+  "name": "lunch-web",
+  "version": "1.0.0",
+  "description": "a website for lunch selection",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Sego",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "mongoose": "^8.3.2",
+    "nodemon": "^3.1.0"
+  }
+}
