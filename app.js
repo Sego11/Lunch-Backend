@@ -4,7 +4,7 @@ import indexRoute from "./src/routes/index.routes.js";
 import dishesRoutes from "./src/routes/dish.routes.js";
 import errorHandler from "./src/error-handlers/error.handler.js";
 import { start } from "./server.js";
-import { configureApp } from "./src/config/index.js";
+import configureApp from "./src/config/index.js";
 const app = express();
 
 //runs most of the middlewares
@@ -14,6 +14,7 @@ configureApp(app);
 app.use("/api", indexRoute);
 app.use("/api/v1/dishes", dishesRoutes);
 
+//global error handler
 errorHandler(app);
 
 //app entry

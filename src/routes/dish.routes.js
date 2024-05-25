@@ -1,16 +1,21 @@
 import express from "express";
 
-import {
-  getAllDishes,
-  getDish,
-  createDish,
-  updateDish,
-  deleteDish,
-} from "../controllers/dish.controllers.js";
+import asyncErrorHandler from "../error-handlers/async.error.handler.js";
+import dishControllerInstance from "../controllers/dish.controllers.js";
 
 const router = express.Router();
 
-router.route("/").get(getAllDishes).post(createDish);
-router.route("/:id").get(getDish).patch(updateDish).delete(deleteDish);
+const { getAllDishes, createDish, getDish, updateDish, deleteDish } =
+  dishControllerInstance;
+
+router
+  .route("/")
+  .get(asyncErrorHandler(getAllDishes))
+  .post(asyncErrorHandler(createDish));
+router
+  .route("/:id")
+  .get(asyncErrorHandler(getDish))
+  .patch(asyncErrorHandler(updateDish))
+  .delete(asyncErrorHandler(deleteDish));
 
 export default router;
