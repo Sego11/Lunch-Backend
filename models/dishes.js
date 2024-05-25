@@ -5,8 +5,9 @@ const DishesSchema = new mongoose.Schema({
     type: String,
     required: [true, "Name is required"],
     unique: true,
+    trim: true,
   },
 });
 
-const Dishes = mongoose.model("Dishes", DishesSchema);
-export default Dishes;
+const Dish = mongoose.model("Dish", DishesSchema);
+export default Dish;
