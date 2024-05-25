@@ -39,15 +39,23 @@ const validateErrorHandler = (error) => {
   return new CustomError(message, 400);
 };
 
-export default function (error, req, res, next) {
-  error.statusCode = error.statusCode || 500;
-  error.status = error.status || "error";
-  if (process.env.NODE_ENV === "development") {
-    devErrors(res, error);
-  } else if (process.env.NODE_ENV === "production") {
-    if (error.name === "CastError") error = castErrorHandler(error);
-    if (error.code === 11000) error = duplicateKeyErrorHandler(error);
-    if (error.name === "ValidationError") error = validateErrorHandler(error);
-    prodErrors(res, error);
-  }
-}
+export default (app) => {
+  //this middleware runs if the route does not exist
+  app.use((req, res) => {
+    res.status(404).send("Route does not exist");
+  });
+
+  //this middleware runs if the next function is used (globalErrorHandler)
+  app.use((error, req, res, next) => {
+    error.statusCode = error.statusCode || 500;
+    error.status = error.status || "error";
+    if (process.env.NODE_ENV === "development") {
+      devErrors(res, error);
+    } else if (process.env.NODE_ENV === "production") {
+      if (error.name === "CastError") error = castErrorHandler(error);
+      if (error.code === 11000) error = duplicateKeyErrorHandler(error);
+      if (error.name === "ValidationError") error = validateErrorHandler(error);
+      prodErrors(res, error);
+    }
+  });
+};

@@ -1,6 +1,5 @@
 import Dish from "../models/dishes.js";
-
-import asyncErrorHandler from "../middlewares/async.error.handler.js";
+import asyncErrorHandler from "../error-handlers/async.error.handler.js";
 import CustomError from "../utils/custom.error.js";
 
 //get all dishes

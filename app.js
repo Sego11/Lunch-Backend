@@ -1,20 +1,20 @@
 import express from "express";
 
-import dishes from "./routes/dish.routes.js";
-import notFound from "./middlewares/not.found.js";
-import errorHandler from "./middlewares/error.handler.js";
+import indexRoute from "./src/routes/index.routes.js";
+import dishesRoutes from "./src/routes/dish.routes.js";
+import errorHandler from "./src/error-handlers/error.handler.js";
 import { start } from "./server.js";
-
+import { configureApp } from "./src/config/index.js";
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+//runs most of the middlewares
+configureApp(app);
 
 //routes
-app.use("/api/v1/dishes", dishes);
+app.use("/api", indexRoute);
+app.use("/api/v1/dishes", dishesRoutes);
 
-app.use(notFound);
-app.use(errorHandler);
+errorHandler(app);
 
 //app entry
 start();
