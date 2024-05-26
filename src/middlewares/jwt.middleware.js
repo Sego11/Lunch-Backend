@@ -1,6 +1,5 @@
 import { expressjwt as jwt } from "express-jwt";
 
-console.log("token secret");
 //instantiate the JWT token validation middleware
 const isAuthenticated = jwt({
   secret: process.env.TOKEN_SECRET,

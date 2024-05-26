@@ -1,7 +1,7 @@
 import express from "express";
 
 import asyncErrorHandler from "../error-handlers/async.error.handler.js";
-import dishControllerInstance from "../controllers/dish.controllers.js";
+import dishControllerInstance from "../controllers/dish.controller.js";
 
 const router = express.Router();
 
