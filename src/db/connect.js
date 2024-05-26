@@ -1,5 +1,5 @@
-import mongoose from "mongoose";
+import { connect } from "mongoose";
 
 export default function connectDB(url) {
-  return mongoose.connect(url);
+  return connect(url);
 }

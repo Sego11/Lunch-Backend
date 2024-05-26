@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const DishesSchema = new mongoose.Schema(
+const DishSchema = new mongoose.Schema(
   {
     name: {
       type: String,
@@ -8,9 +8,13 @@ const DishesSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+    day: {
+      type: String,
+      required: [true, "Please enter the day of the week"],
+    },
   },
   { timestamps: true }
 );
 
-const Dish = mongoose.model("Dish", DishesSchema);
+const Dish = mongoose.model("Dish", DishSchema);
 export default Dish;

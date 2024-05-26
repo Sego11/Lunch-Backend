@@ -1,4 +1,4 @@
-import Dish from "../models/dishes.js";
+import Dish from "../models/Dishes.model.js";
 import CustomError from "../utils/custom.error.js";
 
 class DishController {

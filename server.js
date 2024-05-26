@@ -1,9 +1,5 @@
-import dotenv from "dotenv";
-
 import connectDB from "./src/db/connect.js";
-import app from "./app.js";
-
-dotenv.config();
+import { app } from "./app.js";
 
 const port = process.env.PORT || 5000;
 
@@ -17,4 +13,5 @@ export const start = async () => {
     console.log(error);
   }
   console.log(process.env.NODE_ENV);
+  console.log(process.env.TOKEN_SECRET);
 };
