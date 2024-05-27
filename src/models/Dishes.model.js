@@ -8,9 +8,14 @@ const DishSchema = new mongoose.Schema(
       unique: true,
       trim: true,
     },
+
     day: {
       type: String,
-      required: [true, "Please enter the day of the week"],
+      required: true,
+      // enum: {
+      //   values: ["monday", "tuesday", "wednesday", "thursday", "friday"],
+      //   // message: "day not available",
+      // },
     },
   },
   { timestamps: true }

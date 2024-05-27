@@ -5,6 +5,7 @@ import express from "express";
 import indexRoute from "./src/routes/index.routes.js";
 import dishesRoutes from "./src/routes/dish.routes.js";
 import authRoutes from "./src/routes/auth.routes.js";
+import orderRoutes from "./src/routes/order.routes.js";
 import errorHandler from "./src/error-handlers/error.handler.js";
 import { start } from "./server.js";
 import configureApp from "./src/config/index.js";
@@ -18,6 +19,7 @@ configureApp(app);
 app.use("/api/v1", indexRoute);
 app.use("/api/v1/dishes", dishesRoutes);
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/orders", orderRoutes);
 
 //global error handler
 errorHandler(app);

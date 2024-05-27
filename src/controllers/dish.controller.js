@@ -3,7 +3,7 @@ import CustomError from "../utils/custom.error.js";
 
 class DishController {
   //get all dishes
-  async getAllDishes(req, res) {
+  async getAllDishes(req, res, next) {
     const dishes = await Dish.find();
     res.status(200).send({
       message: "success",
@@ -21,7 +21,7 @@ class DishController {
       );
       return next(error);
     }
-    res.status(200).send({
+    res.status(200).json({
       message: "success",
       data: { dish },
     });
@@ -30,7 +30,7 @@ class DishController {
   //create dish
   async createDish(req, res, next) {
     const dish = await Dish.create(req.body);
-    res.status(201).send({
+    res.status(201).json({
       message: "success",
       data: { dish },
     });
