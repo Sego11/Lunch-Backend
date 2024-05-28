@@ -8,6 +8,7 @@ const router = express.Router();
 const { getAllDishes, createDish, getDish, updateDish, deleteDish } =
   dishControllerInstance;
 
+//TODO: protect the necessary routes
 router
   .route("/")
   .get(asyncErrorHandler(getAllDishes))

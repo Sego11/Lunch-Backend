@@ -11,11 +11,8 @@ const DishSchema = new mongoose.Schema(
 
     day: {
       type: String,
-      required: true,
-      // enum: {
-      //   values: ["monday", "tuesday", "wednesday", "thursday", "friday"],
-      //   // message: "day not available",
-      // },
+      required: [true, "Day is required"],
+      enum: ["monday", "tuesday", "wednesday", "thursday", "friday"],
     },
   },
   { timestamps: true }

@@ -39,6 +39,12 @@ const validateErrorHandler = (error) => {
   return new CustomError(message, 400);
 };
 
+const jwtErrorHandler = (error) => {
+  return new CustomError("Invalid token. Please login again!", 401);
+};
+const tokenExpiredHandler = (error) => {
+  return new CustomError("JWT has expired. Please login again!", 401);
+};
 export default (app) => {
   //this middleware runs if the route does not exist
   app.use((req, res) => {
@@ -55,6 +61,9 @@ export default (app) => {
       if (error.name === "CastError") error = castErrorHandler(error);
       if (error.code === 11000) error = duplicateKeyErrorHandler(error);
       if (error.name === "ValidationError") error = validateErrorHandler(error);
+      if (error.name === "TokenExpiredError")
+        error = tokenExpiredHandler(error);
+      if (error.name === "JsonWebTokenError") error = jwtErrorHandler(error);
       prodErrors(res, error);
     }
   });

@@ -10,7 +10,7 @@ class AuthController {
   static saltRounds = 10;
 
   async signUp(req, res, next) {
-    const { email, password } = req.body;
+    const { name, email, role, password } = req.body;
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!emailRegex.test(email)) {
@@ -37,10 +37,15 @@ class AuthController {
     const salt = bcrypt.genSaltSync(AuthController.saltRounds);
     const hashedPassword = bcrypt.hashSync(password, salt);
 
-    const createdUser = await User.create({ email, password: hashedPassword });
+    const createdUser = await User.create({
+      name,
+      email,
+      role,
+      password: hashedPassword,
+    });
 
     const { _id } = createdUser;
-    const user = { email, _id };
+    const user = { name, email, _id };
     res.status(201).json({
       message: "success",
       data: { user },
@@ -65,8 +70,8 @@ class AuthController {
     const passwordCorrect = bcrypt.compareSync(password, foundUser.password);
 
     if (passwordCorrect) {
-      const { _id, email } = foundUser;
-      const payload = { _id, email };
+      const { _id, email, name, role } = foundUser;
+      const payload = { _id, email, name, role };
 
       const authToken = jwt.sign(payload, process.env.TOKEN_SECRET, {
         algorithm: "HS256",
