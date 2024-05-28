@@ -2,21 +2,23 @@ import express from "express";
 
 import asyncErrorHandler from "../error-handlers/async.error.handler.js";
 import dishControllerInstance from "../controllers/dish.controller.js";
+import isAuthenticated from "../middlewares/jwt.middleware.js";
+import restrict from "../middlewares/role.middleware.js";
 
 const router = express.Router();
 
 const { getAllDishes, createDish, getDish, updateDish, deleteDish } =
   dishControllerInstance;
 
-//TODO: protect the necessary routes
 router
   .route("/")
-  .get(asyncErrorHandler(getAllDishes))
-  .post(asyncErrorHandler(createDish));
+  .get(isAuthenticated, asyncErrorHandler(getAllDishes))
+  .post(isAuthenticated, restrict("admin"), asyncErrorHandler(createDish));
+
 router
   .route("/:id")
-  .get(asyncErrorHandler(getDish))
-  .patch(asyncErrorHandler(updateDish))
-  .delete(asyncErrorHandler(deleteDish));
+  .get(isAuthenticated, asyncErrorHandler(getDish))
+  .patch(isAuthenticated, restrict("admin"), asyncErrorHandler(updateDish))
+  .delete(isAuthenticated, restrict("admin"), asyncErrorHandler(deleteDish));
 
 export default router;
