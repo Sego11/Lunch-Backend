@@ -4,7 +4,18 @@ import CustomError from "../utils/custom.error.js";
 class DishController {
   //get all dishes
   async getAllDishes(req, res, next) {
-    const dishes = await Dish.find().select("-createdAt -updatedAt -__v");
+    const { day } = req.query;
+
+    const queryObject = {};
+
+    if (day) {
+      queryObject["day"] = day;
+    }
+
+    console.log(queryObject);
+    const dishes = await Dish.find(queryObject).select(
+      "-createdAt -updatedAt -__v"
+    );
     res.status(200).send({
       message: "success",
       data: { dishes },
