@@ -4,7 +4,7 @@ import CustomError from "../utils/custom.error.js";
 class DishController {
   //get all dishes
   async getAllDishes(req, res, next) {
-    const dishes = await Dish.find();
+    const dishes = await Dish.find().select("-createdAt -updatedAt -__v");
     res.status(200).send({
       message: "success",
       data: { dishes },
@@ -29,7 +29,13 @@ class DishController {
 
   //create dish
   async createDish(req, res, next) {
-    const dish = await Dish.create(req.body);
+    const { name, day } = req.body;
+    const foundDish = await Dish.findOne({ name });
+
+    if (foundDish) {
+      return next(new CustomError("Dish already exists", 400));
+    }
+    const dish = await Dish.create({ name, day });
     res.status(201).json({
       message: "success",
       data: { dish },
@@ -44,10 +50,8 @@ class DishController {
     });
 
     if (!updatedDish) {
-      const error = new CustomError(
-        `dish with id ${req.params.id} does not exist`,
-        404
-      );
+      const error = new CustomError(`Dish not found`, 404);
+
       return next(error);
     }
     res.status(200).json({
@@ -63,10 +67,7 @@ class DishController {
     const deletedDish = await Dish.findByIdAndDelete(req.params.id);
 
     if (!deletedDish) {
-      const error = new CustomError(
-        `movie with id: ${req.params.id} cannot be found`,
-        404
-      );
+      const error = new CustomError(`Dish not found`, 404);
       return next(error);
     }
     res.status(204).json({

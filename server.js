@@ -13,4 +13,5 @@ export const start = async () => {
     console.log(error);
   }
   console.log(process.env.NODE_ENV);
+  console.log(process.env.ORIGIN);
 };

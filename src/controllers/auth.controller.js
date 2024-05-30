@@ -30,7 +30,10 @@ class AuthController {
     const foundUser = await User.findOne({ email });
 
     if (foundUser) {
-      const error = new CustomError("User already exists", 400);
+      const error = new CustomError(
+        `User with email: ${email} already exists`,
+        400
+      );
       return next(error);
     }
 
@@ -86,7 +89,9 @@ class AuthController {
   }
 
   verifyToken(req, res) {
-    return res.status(200).json(req.payload);
+    return res
+      .status(200)
+      .json({ status: "success", data: { user: req.payload } });
   }
 
   //forgot password
