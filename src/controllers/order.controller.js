@@ -41,7 +41,10 @@ class OrderController {
   }
 
   async getOrder(req, res, next) {
-    const order = await Order.findById(req.params.id);
+    const order = await Order.findById(req.params.id).populate({
+      path: "dish",
+      select: "name",
+    });
 
     if (!order) {
       return next(new CustomError("order not found", 404));
@@ -70,6 +73,11 @@ class OrderController {
     } else {
       await Order.deleteOne({ _id: req.params.id });
     }
+    res.status(204).json({ status: "success", data: null });
+  }
+
+  async deleteAllOrders(req, res, next) {
+    await Order.deleteMany();
     res.status(204).json({ status: "success", data: null });
   }
 }
