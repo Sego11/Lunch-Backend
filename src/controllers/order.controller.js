@@ -3,8 +3,6 @@ import CustomError from "../utils/custom.error.js";
 
 class OrderController {
   async createOrder(req, res, next) {
-    //I can add extra security to check whether the payload id
-    //matches the user id
     const { dish, user } = req.body;
     const foundOrder = await Order.findOne({ user });
 
@@ -41,14 +39,19 @@ class OrderController {
   }
 
   async getOrder(req, res, next) {
-    const order = await Order.findById(req.params.id).populate({
-      path: "dish",
-      select: "name",
-    });
+    const { user } = req.body;
 
-    if (!order) {
-      return next(new CustomError("order not found", 404));
+    const foundOrder = await Order.findOne({ user });
+
+    if (!foundOrder) {
+      return next(new CustomError("No order found", 404));
     }
+
+    const id = foundOrder._id.toString();
+
+    const order = await Order.findById(id)
+      .populate({ path: "dish", select: "name" })
+      .populate({ path: "user", select: "name" });
 
     res.status(200).json({
       status: "success",

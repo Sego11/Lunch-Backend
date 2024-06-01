@@ -6,10 +6,10 @@ import cookieParser from "cookie-parser";
 
 import cors from "cors";
 
-// const FRONTEND_URL = process.env.ORIGIN || "http://localhost:4200";
+const FRONTEND_URL = process.env.ORIGIN || "http://localhost:4200";
 
 const corsOptions = {
-  origin: "*",
+  origin: FRONTEND_URL || "*",
   optionsSuccessStatus: 200,
 };
 

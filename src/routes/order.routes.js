@@ -21,8 +21,8 @@ router.get(
   asyncErrorHandler(getAllOrders)
 );
 
-//GET -api/v1/orders/get-order/:id returns a particular order
-router.get("/get-order/:id", isAuthenticated, asyncErrorHandler(getOrder));
+//POST -api/v1/orders/get-order/ add the user id from frontend and returns a particular order
+router.post("/get-order/", isAuthenticated, asyncErrorHandler(getOrder));
 
 //GET -api/v1/orders/get-order/:id deletes a particular order
 router.delete(
