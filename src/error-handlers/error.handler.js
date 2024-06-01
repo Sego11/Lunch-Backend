@@ -46,6 +46,11 @@ const tokenExpiredHandler = (error) => {
   return new CustomError("JWT has expired. Please login again!", 401);
 };
 export default (app) => {
+  app.use((req, res, next) => {
+    console.log(`Request recieved: ${req.method} ${req.url}`);
+    next();
+  });
+
   //this middleware runs if the route does not exist
   app.use((req, res) => {
     res.status(404).send("Route does not exist");
