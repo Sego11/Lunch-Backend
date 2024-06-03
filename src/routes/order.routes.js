@@ -7,8 +7,14 @@ import isAuthenticated from "../middlewares/jwt.middleware.js";
 
 const router = Router();
 
-const { createOrder, getAllOrders, getOrder, deleteOrder, deleteAllOrders } =
-  orderControllerInstance;
+const {
+  createOrder,
+  getAllOrders,
+  getOrder,
+  deleteOrder,
+  deleteAllOrders,
+  getUserOrder,
+} = orderControllerInstance;
 
 //POST - api/v1/orders/create-order creates a new Order in the db
 router.post("/create-order", isAuthenticated, asyncErrorHandler(createOrder));
@@ -22,7 +28,8 @@ router.get(
 );
 
 //POST -api/v1/orders/get-order/ add the user id from frontend and returns a particular order
-router.post("/get-order/", isAuthenticated, asyncErrorHandler(getOrder));
+// router.post("/get-order/", isAuthenticated, asyncErrorHandler(getOrder));
+router.get("/get-order/", isAuthenticated, asyncErrorHandler(getUserOrder));
 
 //GET -api/v1/orders/get-order/:id deletes a particular order
 router.delete(

@@ -59,6 +59,28 @@ class OrderController {
     });
   }
 
+  async getUserOrder(req, res, next) {
+    const { user } = req.query;
+    const queryObject = { user: user };
+
+    console.log(queryObject);
+
+    const userOrder = await Order.findOne(queryObject)
+      .select("-createdAt -updatedAt")
+      .populate({ path: "dish", select: "name" })
+      .populate({ path: "user", select: "name" });
+
+    if (!userOrder) {
+      return next(new CustomError("No order found", 404));
+    }
+    console.log(userOrder);
+
+    res.status(200).json({
+      status: "success",
+      data: { userOrder },
+    });
+  }
+
   async deleteOrder(req, res, next) {
     const order = await Order.findById(req.params.id);
 

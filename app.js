@@ -16,10 +16,10 @@ const app = express();
 configureApp(app);
 
 //routes
-app.use("/api/v1", indexRoute);
-app.use("/api/v1/dishes", dishesRoutes);
-app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/orders", orderRoutes);
+app.use(indexRoute);
+app.use("/dishes", dishesRoutes);
+app.use("/auth", authRoutes);
+app.use("/orders", orderRoutes);
 
 //global error handler
 errorHandler(app);
