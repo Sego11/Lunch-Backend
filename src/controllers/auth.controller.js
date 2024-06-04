@@ -68,6 +68,21 @@ class AuthController {
       return next(error);
     }
 
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    if (!emailRegex.test(email)) {
+      const error = new CustomError("Please provide a valid Email", 400);
+      return next(error);
+    }
+
+    const passwordRegex = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/;
+    if (!passwordRegex.test(password)) {
+      const error = new CustomError(
+        "Password must have at least 6 characters and contain at least one number, one lowercase, and one uppercase letter.",
+        400
+      );
+      return next(error);
+    }
+
     const foundUser = await User.findOne({ email });
 
     if (!foundUser) {
