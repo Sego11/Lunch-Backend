@@ -1,4 +1,3 @@
-import { text } from "express";
 import { createTransport } from "nodemailer";
 
 export default async (option) => {
@@ -8,7 +7,6 @@ export default async (option) => {
     port: process.env.EMAIL_PORT,
     auth: { user: process.env.EMAIL_USER, pass: process.env.EMAIL_PASSWORD },
   });
-  console.log(transporter.options);
 
   //defining email options
   const emailOptions = {

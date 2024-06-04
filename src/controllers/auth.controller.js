@@ -12,6 +12,11 @@ class AuthController {
   async signUp(req, res, next) {
     const { name, email, role, password } = req.body;
 
+    if (!email || !name || !password) {
+      const error = new CustomError("Please fill all fields", 400);
+      return next(error);
+    }
+
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!emailRegex.test(email)) {
       const error = new CustomError("Please provide a valid Email", 400);
@@ -59,7 +64,7 @@ class AuthController {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      const error = new CustomError("Please provide name and password", 400);
+      const error = new CustomError("Please provide email and password", 400);
       return next(error);
     }
 
